@@ -2,7 +2,7 @@
 
 ## Introduction
 <div align=center><img  src=imgs/compare_table.png></div>
-<center><font size=2>Fig. 1 Comparison of the LD-ConGR and popular gesture recognition datasets</font></center>
+<p align="center"><font size=2>Fig. 1 Comparison of the LD-ConGR and popular gesture recognition datasets</font></p>
 
 Gesture recognition plays an important role in natural human-computer interaction and sign language recognition. Existing research on gesture recognition is limited to close-range interaction such as vehicle gesture control and face-to-face communication. To apply gesture recognition to long-distance interactive scenes such as meetings and smart homes, we establish a large RGB-D video dataset LD-ConGR. LD-ConGR is distinguished from existing gesture datasets by its **long-distance gesture collection**, **fine-grained annotations**, and **high video quality**. Specifically, 1) the farthest gesture provided by the LD-ConGR is captured 4m away from the camera while existing gesture datasets collect gestures within 1m from the camera; 2) besides the gesture category, the temporal segmentation of gestures and hand location are also annotated in LD-ConGR; 3) videos are captured at high resolution (1280 x 720 for color streams and 640 x 576 for depth streams) and high frame rate (30 fps).
 
@@ -32,6 +32,7 @@ python eval_jaccard/con_score.py test_labels.txt results.txt
 ### Baseline
 <div align=center><img  src=imgs/results.png></div>
 <center><font size=2>Fig. 4 Experimental results</font></center>
+
 Based on the proposed LD-ConGR dataset, we conducted a series of experimental explorations. A baseline model based on 3D ResNeXt is implemented and achieves 85.33% accuracy on RGB data. To make good use of the depth information, we learn from the ideas of [2] and build a multimodal gesture recognition model ResNeXt-MMTM. It achieves an accuracy of 89.66% on LD-ConGR. Moreover, we propose two strategies, gesture region estimation and key frame sampling, to deal with long-distance gesture recognition and the uncertainty of gesture duration. Refer to [our paper](LD-ConGR-CVPR2022.pdf) for more details. The code is in [resnext-mmtm](resnext-mmtm).
 
 ### Citation
