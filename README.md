@@ -13,7 +13,7 @@ Gesture recognition plays an important role in natural human-computer interactio
 
 LD-ConGR dataset contains 10 gesture classes, of which three are static gestures and seven are dynamic gestures (Fig. 1). A total of **542 videos** and **44,887 gesture instances** are collected in LD-ConGR. The videos are collected from 30 subjects in 5 different scenes and captured in a third perspective with Kinect V4. Each video contains a color stream and a depth stream. The two streams are recorded synchronously at 30 fps with resolutions of 1280 x 720 and 640 x 576, respectively. The dataset is randomly divided into training set and testing set by subjects (23 subjects for training and 7 subjects for testing). Number of gesture instances and statistics of gesture duration (measured in frames) are reported in Fig. 3. 
 <!-- The 10 classes of gestures have high ease of use. We will continue to maintain the dataset and add new gesture classes. -->
-<div align=center>![statistic](imgs/data_statistics.png)</div>
+<div align=center><img  src=imgs/data_statistics.png></div>
 <center><font size=2>Fig. 3 Number of gesture instances and statistics of gesture duration</font></center>
 
 ### Data Download
@@ -30,7 +30,7 @@ python eval_jaccard/con_score.py test_labels.txt results.txt
 
 
 ### Baseline
-<div align=center>![results](imgs/results.png)</div>
+<div align=center><img  src=imgs/results.png></div>
 <center><font size=2>Fig. 4 Experimental results</font></center>
 Based on the proposed LD-ConGR dataset, we conducted a series of experimental explorations. A baseline model based on 3D ResNeXt is implemented and achieves 85.33% accuracy on RGB data. To make good use of the depth information, we learn from the ideas of [2] and build a multimodal gesture recognition model ResNeXt-MMTM. It achieves an accuracy of 89.66% on LD-ConGR. Moreover, we propose two strategies, gesture region estimation and key frame sampling, to deal with long-distance gesture recognition and the uncertainty of gesture duration. Refer to [our paper](LD-ConGR-CVPR2022.pdf) for more details. The code is in [resnext-mmtm](resnext-mmtm).
 
@@ -48,5 +48,6 @@ If you find useful the LD-Con dataset for your research, please cite the paper:
 ### Ref
 <font size=2.5>
 [1] Jun Wan, Yibing Zhao, Shuai Zhou, Isabelle Guyon, Sergio Escalera, and Stan Z Li. Chalearn looking at people rgb-d isolated and continuous datasets for gesture recognition. In CVPRW, pages 56–64, 2016.  
+
 [2] Hamid Reza Vaezi Joze, Amirreza Shaban, Michael L Iuz-zolino, and Kazuhito Koishida. Mmtm: Multimodal transfer module for cnn fusion. In CVPR, pages 13289–13299, 2020.
 </font>
