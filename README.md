@@ -26,7 +26,7 @@ The accuracy is adopted to evaluate the model for IsoGR task. For ConGR, the mea
 ```
 python eval_jaccard/con_score.py test_labels.txt results.txt
 ```
-`test_labels.txt` and `results.txt` store the ground truths and prediction results, one video each line: `<videoName>,<gesture1>,<gesture2>,...`. Each gesture is represented by `<startFrame> <endFrame> <label>`.
+`test_labels.txt` and `results.txt` store the ground truths and prediction results, one video each line: `<videoName>,<gesture1>,<gesture2>,<...>`. Each gesture is represented by `<startFrame> <endFrame> <label>`.
 
 
 ### Baseline
