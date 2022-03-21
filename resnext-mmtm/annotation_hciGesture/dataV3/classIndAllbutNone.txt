@@ -1,0 +1,10 @@
+1 palm
+2 fist
+3 thumb_up
+4 shift_right
+5 downward
+6 upward
+7 left
+8 right
+9 pinch
+10 click
