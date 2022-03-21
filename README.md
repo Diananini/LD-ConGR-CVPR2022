@@ -1,14 +1,14 @@
 # LD-ConGR: A Large RGB-D Video Dataset for Long-Distance Continuous Gesture Recognition
 
 ## Introduction
-<div align=center><img  src=https://github.com/Diananini/LD-ConGR-CVPR2022/tree/main/imgs/compare_table.png></div>
+<div align=center><img  src=imgs/compare_table.png></div>
 <center><font size=2>Fig. 1 Comparison of the LD-ConGR and popular gesture recognition datasets</font></center>
 
 Gesture recognition plays an important role in natural human-computer interaction and sign language recognition. Existing research on gesture recognition is limited to close-range interaction such as vehicle gesture control and face-to-face communication. To apply gesture recognition to long-distance interactive scenes such as meetings and smart homes, we establish a large RGB-D video dataset LD-ConGR. LD-ConGR is distinguished from existing gesture datasets by its **long-distance gesture collection**, **fine-grained annotations**, and **high video quality**. Specifically, 1) the farthest gesture provided by the LD-ConGR is captured 4m away from the camera while existing gesture datasets collect gestures within 1m from the camera; 2) besides the gesture category, the temporal segmentation of gestures and hand location are also annotated in LD-ConGR; 3) videos are captured at high resolution (1280 x 720 for color streams and 640 x 576 for depth streams) and high frame rate (30 fps).
 
 ## The LD-ConGR Dataset
 ### Data Statistics
-<div align=center>![image](imgs/gestures.png)</div>
+<div align=center><img  src=imgs/gestures.png></div>
 <center><font size=2>Fig. 2 Ten gesture classes of LD-ConGR dataset</font></center>
 
 LD-ConGR dataset contains 10 gesture classes, of which three are static gestures and seven are dynamic gestures (Fig. 1). A total of **542 videos** and **44,887 gesture instances** are collected in LD-ConGR. The videos are collected from 30 subjects in 5 different scenes and captured in a third perspective with Kinect V4. Each video contains a color stream and a depth stream. The two streams are recorded synchronously at 30 fps with resolutions of 1280 x 720 and 640 x 576, respectively. The dataset is randomly divided into training set and testing set by subjects (23 subjects for training and 7 subjects for testing). Number of gesture instances and statistics of gesture duration (measured in frames) are reported in Fig. 3. 
