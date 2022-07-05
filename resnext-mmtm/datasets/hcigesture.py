@@ -19,7 +19,7 @@ import pdb
 # import sys
 # sys.path.insert(0, '/data6/diana/gesture/Real-time-GesRec/utils')
 # import darknet_utils
-crop_regions_json_path = '/data/datasets/HCIGesture/expand_crop_regions.json'
+crop_regions_json_path = '/data/LD-ConGR-CVPR2022/resnext-mmtm/annotation_hciGesture/expand_crop_regions.json'
 with open(crop_regions_json_path) as f:
     crop_regions = json.load(f)
 
