@@ -37,31 +37,31 @@ Run `bash sh/run_clf_hci_test.sh`
 
 Arguments:
 
-    `--root_path` The absolute path of `resnext-mmtm`  
-    `--video_path` The parent directory path of `frames`  
-    `--result_path` Results directory path  
-    `--resume_path` Model path  
-    `--sample_duration` Temporal duration of inputs  
-    `--model` Model name, 'resnext' or 'mmtnet'  
-    `--modality` Modality of input data, 'RGB' or 'RGB-D'  
-    `--iscrop` Use the gesture region estimation strategy  
-    `--isKeyframes` Use the key frame sampling strategy  
+`--root_path` The absolute path of `resnext-mmtm`  
+`--video_path` The parent directory path of `frames`  
+`--result_path` Results directory path  
+`--resume_path` Model path  
+`--sample_duration` Temporal duration of inputs  
+`--model` Model name, 'resnext' or 'mmtnet'  
+`--modality` Modality of input data, 'RGB' or 'RGB-D'  
+`--iscrop` Use the gesture region estimation strategy  
+`--isKeyframes` Use the key frame sampling strategy  
 
 ## Run training
 Run `bash sh/run_clf_hci_train.sh`
 
 Arguments:
 
-`--root_path` The absolute path of `resnext-mmtm`
-`--video_path` The parent directory path of `frames`
-`--result_path` Results directory path
-`--resume_path` Model path
-`--sample_duration` Temporal duration of inputs
-`--model` Model name, 'resnext' or 'mmtnet'
-`--modality` Modality of input data, 'RGB' or 'RGB-D'
-`--iscrop` Use the gesture region estimation strategy
-`--resize` Resize the estimated gesture region
-`--resize_size` Resize size of the estimated gesture region
-`--isKeyframes` Use the key frame sampling strategy
-`--pretrain_path` Pretrained model path
-`--pretrain_dataset` Pretrained dataset
+`--root_path` The absolute path of `resnext-mmtm`  
+`--video_path` The parent directory path of `frames`  
+`--result_path` Results directory path  
+`--resume_path` Model path  
+`--sample_duration` Temporal duration of inputs  
+`--model` Model name, 'resnext' or 'mmtnet'  
+`--modality` Modality of input data, 'RGB' or 'RGB-D'  
+`--iscrop` Use the gesture region estimation strategy  
+`--resize` Resize the estimated gesture region  
+`--resize_size` Resize size of the estimated gesture region  
+`--isKeyframes` Use the key frame sampling strategy  
+`--pretrain_path` Pretrained model path  
+`--pretrain_dataset` Pretrained dataset  
