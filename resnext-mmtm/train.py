@@ -38,7 +38,7 @@ def train_epoch(epoch, data_loader, model, criterion, optimizer, opt,
     printer = 100 if opt.dataset == 'jester' else 10
 
     end_time = time.time()
-    for i, (inputs, targets) in enumerate(data_loader):
+    for i, (inputs, targets, _) in enumerate(data_loader):
         iters = (epoch - 1) * len(data_loader) + (i + 1)
         data_time.update(time.time() - end_time)
 
@@ -47,21 +47,6 @@ def train_epoch(epoch, data_loader, model, criterion, optimizer, opt,
             # inputs = inputs.cuda()
         inputs = Variable(inputs)
         targets = Variable(targets)
-
-        # pytorch tensorboard tutorial: https://pytorch.org/docs/stable/tensorboard.html
-        # if inputs.size(1) == 4: # B*C*T*H*W  C=4
-        #     # writer.add_video('video-RGB', vid_tensor=inputs[:, :3, :, :, :].permute(0, 2, 1, 3, 4) , 
-        #     # global_step=iters, fps=opt.fps) # vid_tensor: (N,T,C,H,W). The values should lie in [0, 255] for type uint8 or [0, 1] for type float.
-        #     # writer.add_video('video-motion', vid_tensor=inputs[:, -1, :, :, :].unsqueeze(1).permute(0, 2, 1, 3, 4), 
-        #     #     global_step=iters, fps=opt.fps)
-
-        #     writer.add_images('image-RGB', img_tensor=inputs[:,:3,0,:,:], global_step=iters)
-        #     writer.add_images('image-motion', img_tensor=inputs[:,-1,-1,:,:].unsqueeze(1), global_step=iters)#, dataformats='NHW'
-        # else:
-        #     # writer.add_video('video', vid_tensor=inputs[:, :3, :, :, :].permute(0, 2, 1, 3, 4), 
-        #     #     global_step=iters, fps=opt.fps)
-
-        #     writer.add_images('image', img_tensor=inputs[:,:3,0,:,:], global_step=iters)
 
         batch_size = inputs.size(0)
 
@@ -132,34 +117,7 @@ def train_epoch(epoch, data_loader, model, criterion, optimizer, opt,
             'recall': recall_l,
             'lr': optimizer.param_groups[0]['lr']
         })
-            # if i % printer ==0:
-            #     print('Epoch: [{0}][{1}/{2}]\t lr: {lr:.5f}\t'
-            #           'Time {batch_time.val:.3f} ({batch_time.avg:.3f})\t'
-            #           'Data {data_time.val:.3f} ({data_time.avg:.3f})\t'
-            #           'Loss {loss.val:.8f} ({loss.avg:.8f})\t'
-            #           # 'Prec@1 {top1.val:.5f} ({top1.avg:.5f})\t'
-            #           # 'Prec@5 {top5.val:.5f} ({top5.avg:.5f})'
-            #           'Acc {acc.val:.3f} ({acc.avg:.3f})\t'
-            #           'Precision {precision.val:.3f}({precision.avg:.3f})\t'
-            #           'Recall {recall.val:.3f}({recall.avg:.3f})'.format(
-            #               epoch,
-            #               i,
-            #               len(data_loader),
-            #               batch_time=batch_time,
-            #               data_time=data_time,
-            #               loss=losses,
-            #               # top1=top1,
-            #               # top5=top5,
-            #               acc=accuracies,
-            #               precision=precisions,
-            #               recall=recalls,
-            #               lr=optimizer.param_groups[0]['lr']))
-        
-    #         print('batch confusion matrix:')
-    #         print(confusions.cur_conf)
-    # print('total confusion matrix:')
-    # print(confusions.conf)
-    # sys.stdout.flush()
+            
     loss_l = [losses.avg.item() for losses in losses_l]
     acc_l = [accuracies.avg for accuracies in accuracies_l]
     pre_l = [precisions.avg for precisions in precisions_l]

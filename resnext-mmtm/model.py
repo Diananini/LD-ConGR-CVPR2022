@@ -1,77 +1,19 @@
 import torch
 from torch import nn
 
-from models import c3d, squeezenet, mobilenet, shufflenet, mobilenetv2, shufflenetv2, resnext, resnet, resnetl, mmtnet
+from models import resnext, mmtnet
 import pdb
 
 def generate_model(opt):
-    assert opt.model in ['c3d', 'squeezenet', 'mobilenet', 'resnext', 'resnet', 'resnetl',
-                         'shufflenet', 'mobilenetv2', 'shufflenetv2', 'mmtnet']
+    assert opt.model in ['resnext', 'mmtnet']
 
-
-    if opt.model == 'c3d':
-        from models.c3d import get_fine_tuning_parameters
-        model = c3d.get_model(
-            num_classes=opt.n_classes,
-            sample_size=opt.sample_size,
-            sample_duration=opt.sample_duration)
-    elif opt.model == 'squeezenet':
-        from models.squeezenet import get_fine_tuning_parameters
-        model = squeezenet.get_model(
-            version=opt.version,
-            num_classes=opt.n_classes,
-            sample_size=opt.sample_size,
-            sample_duration=opt.sample_duration)
-    elif opt.model == 'shufflenet':
-        from models.shufflenet import get_fine_tuning_parameters
-        model = shufflenet.get_model(
-            groups=opt.groups,
-            width_mult=opt.width_mult,
-            num_classes=opt.n_classes)
-    elif opt.model == 'shufflenetv2':
-        from models.shufflenetv2 import get_fine_tuning_parameters
-        model = shufflenetv2.get_model(
-            num_classes=opt.n_classes,
-            sample_size=opt.sample_size,
-            width_mult=opt.width_mult)
-    elif opt.model == 'mobilenet':
-        from models.mobilenet import get_fine_tuning_parameters
-        model = mobilenet.get_model(
-            num_classes=opt.n_classes,
-            sample_size=opt.sample_size,
-            width_mult=opt.width_mult)
-    elif opt.model == 'mobilenetv2':
-        from models.mobilenetv2 import get_fine_tuning_parameters
-        model = mobilenetv2.get_model(
-            num_classes=opt.n_classes,
-            sample_size=opt.sample_size,
-            width_mult=opt.width_mult)
-    elif opt.model == 'resnext':
+    if opt.model == 'resnext':
         assert opt.model_depth in [50, 101, 152]
         from models.resnext import get_fine_tuning_parameters
         model = resnext.get_model(opt.model_depth,
             num_classes=opt.n_classes,
             shortcut_type=opt.resnet_shortcut,
             cardinality=opt.resnext_cardinality,
-            sample_size=opt.sample_size,
-            sample_duration=opt.sample_duration)
-    elif opt.model == 'resnetl':
-        assert opt.model_depth in [10]
-
-        from models.resnetl import get_fine_tuning_parameters
-
-        if opt.model_depth == 10:
-            model = resnetl.resnetl10(
-                num_classes=opt.n_classes,
-                shortcut_type=opt.resnet_shortcut,
-                sample_size=opt.sample_size,
-                sample_duration=opt.sample_duration)
-    elif opt.model == 'resnet':
-        assert opt.model_depth in [10, 18, 34, 50, 101, 152, 200]
-        from models.resnet import get_fine_tuning_parameters
-        model = resnet.get_model(opt.model_depth,
-            num_classes=opt.n_classes,
-            shortcut_type=opt.resnet_shortcut,
             sample_size=opt.sample_size,
             sample_duration=opt.sample_duration)
 
@@ -97,32 +39,18 @@ def generate_model(opt):
 
     if not opt.no_cuda:
         model = nn.DataParallel(model, device_ids=None)
-        # pytorch_total_params = sum(p.numel() for p in model.parameters() if
-        #                        p.requires_grad)
-        # print("Total number of trainable parameters: ", pytorch_total_params)
-        # if opt.force_change_firstlayer:
-        #    model = _modify_first_conv_layer(model,3,3)
 
         if opt.pretrain_path and opt.model not in ['mmtnet']:
             print('loading pretrained model {}'.format(opt.pretrain_path))
             # pretrain = torch.load(opt.pretrain_path, map_location=torch.device('cpu'))
             pretrain = torch.load(opt.pretrain_path)
-            # print(opt.arch)
-            # print(pretrain['arch'])
-            # assert opt.arch == pretrain['arch']
-            # print('opt.sample_duration', opt.sample_duration)
-           # if opt.pretrain_dataset == opt.dataset:
-           #    model.load_state_dict(pretrain['state_dict'])
+
             if opt.pretrain_dataset == 'jester':
-                if opt.sample_duration < 32 and opt.model not in ['c3d', 'squeezenet', 'mobilenet','shufflenet', 'mobilenetv2', 'shufflenetv2', 'resnext']:
+                if opt.sample_duration < 32 and opt.model not in ['resnext']:
                     print('_modify_first_conv_layer')
                     model = _modify_first_conv_layer(model,3,3)
-                if opt.model in  ['mobilenetv2', 'shufflenetv2']:
-                    del pretrain['state_dict']['module.classifier.1.weight']
-                    del pretrain['state_dict']['module.classifier.1.bias']
-                else:
-                    del pretrain['state_dict']['module.fc.weight']
-                    del pretrain['state_dict']['module.fc.bias']
+                del pretrain['state_dict']['module.fc.weight']
+                del pretrain['state_dict']['module.fc.bias']
                 model.load_state_dict(pretrain['state_dict'],strict=False)
         
         if opt.model=='mmtnet':
@@ -140,12 +68,6 @@ def generate_model(opt):
                 # pretrain = torch.load(opt.pretrain_path, map_location=torch.device('cpu'))
                 pretrain = torch.load(opt.pretrain_path)
                 model.load_state_dict(pretrain['state_dict'])
-            # if opt.pretrain_dataset == 'imagenet' and opt.model == 'i3d':
-                
-#            elif opt.pretrain_dataset in ['egogesture', 'nvgesture', 'denso']:
-#                del pretrain['state_dict']['module.fc.weight']
-#                del pretrain['state_dict']['module.fc.bias']
-#                model.load_state_dict(pretrain['state_dict'],strict=False)
 
         if opt.force_change_firstlayer:
             model = _modify_first_conv_layer(model,3,3)
@@ -160,31 +82,8 @@ def generate_model(opt):
                 del pretrain['state_dict']['module.fc.bias']
                 model.load_state_dict(pretrain['state_dict'],strict=False)
             
-            if opt.model in  ['mobilenet', 'mobilenetv2', 'shufflenet', 'shufflenetv2']:
-                model.module.classifier = nn.Sequential(
-                                nn.Dropout(0.5),
-                                nn.Linear(model.module.classifier[1].in_features, opt.n_finetune_classes))
-                model.module.classifier = model.module.classifier.cuda()
-            elif opt.model == 'squeezenet':
-                model.module.classifier = nn.Sequential(
-                                nn.Dropout(p=0.5),
-                                nn.Conv3d(model.module.classifier[1].in_channels, opt.n_finetune_classes, kernel_size=1),
-                                nn.ReLU(inplace=True),
-                                nn.AvgPool3d((1,4,4), stride=1))
-                model.module.classifier = model.module.classifier.cuda()
-            elif opt.model == 'c3d':# CHECK HERE
-                model.module.fc = nn.Linear(
-                    model.module.fc[0].in_features, model.module.fc[0].out_features)
-                model.module.fc = model.module.fc.cuda()
-            # elif opt.model =='i3d':
-            #     model.module.replace_logits(opt.n_finetune_classes, device='cuda:0')
-            else:
-                model.module.fc = nn.Linear(model.module.fc.in_features, opt.n_finetune_classes)
-                model.module.fc = model.module.fc.cuda()
-
-            # model = modify_kernels(opt, model, opt.modality)
-        # else:
-        #     model = modify_kernels(opt, model, opt.modality)
+            model.module.fc = nn.Linear(model.module.fc.in_features, opt.n_finetune_classes)
+            model.module.fc = model.module.fc.cuda()
 
         parameters = get_fine_tuning_parameters(model, opt.ft_portion)
         model = model.cuda()
@@ -199,30 +98,15 @@ def generate_model(opt):
                 name = k[7:]  # delete `module.`
                 pretrain_new[name] = v
 
-            # if opt.model not in ['mmtnet']:
-            #     model = modify_kernels(opt, model, opt.pretrain_modality)
-            # model.load_state_dict(pretrain['state_dict'])
-            # model.load_state_dict(pretrain_new, strict=False)
             if opt.pretrain_dataset == opt.dataset:
                 model.load_state_dict(pretrain_new)
             elif opt.pretrain_dataset in ['jester', 'egogesture', 'nvgesture', 'denso']:
                 del pretrain_new['fc.weight']
                 del pretrain_new['fc.bias']
                 model.load_state_dict(pretrain_new,strict=False)
-
-            if opt.model in  ['mobilenet', 'mobilenetv2', 'shufflenet', 'shufflenetv2']:
-                model.classifier = nn.Sequential(
-                                nn.Dropout(0.9),
-                                nn.Linear(model.classifier[1].in_features, opt.n_finetune_classes)
-                                )
-            elif opt.model == 'squeezenet':
-                model.classifier = nn.Sequential(
-                                nn.Dropout(p=0.5),
-                                nn.Conv3d(model.classifier[1].in_channels, opt.n_finetune_classes, kernel_size=1),
-                                nn.ReLU(inplace=True),
-                                nn.AvgPool3d((1,4,4), stride=1))
-            else:
-                model.fc = nn.Linear(model.fc.in_features, opt.n_finetune_classes)
+            
+            model.fc = nn.Linear(model.fc.in_features, opt.n_finetune_classes)
+            
             if opt.model not in ['mmtnet']:
                 model = modify_kernels(opt, model, opt.modality)
             parameters = get_fine_tuning_parameters(model, opt.ft_portion)

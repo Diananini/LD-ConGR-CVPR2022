@@ -2,7 +2,7 @@
 
 export CUDA_VISIBLE_DEVICES=0,1
 nohup python main.py \
-   --root_path /data2/project/gesture/resnext-mmtm/ \
+   --root_path /data2/project/LD-ConGR-CVPR2022/resnext-mmtm/ \
    --video_path /data/datasets/HCIGesture \
    --annotation_path annotation_hciGesture/dataV3/hciall_but_None.json \
    --result_path results/hci-models/v3/hci_clf_train_resnext_rgb_112_allbutnone \
@@ -26,11 +26,11 @@ nohup python main.py \
    --save_all \
    --no_val \
    --pretrain_path report/models/jester_resnext_101_RGB_32.pth \
-   --pretrain_dataset jester > out/hci_clf_train_resnext_rgb_112_allbutnone_datav3_32.out 2>&1 &
+   --pretrain_dataset jester > hci_clf_train_resnext_rgb_112_allbutnone_datav3_32.out 2>&1 &
 
 # export CUDA_VISIBLE_DEVICES=1,2
 # nohup python main.py \
-#    --root_path /data2/project/gesture/resnext-mmtm/ \
+#    --root_path /data2/project/LD-ConGR-CVPR2022/resnext-mmtm/ \
 #    --video_path /data/datasets/HCIGesture \
 #    --annotation_path annotation_hciGesture/dataV3/hciall_but_None.json \
 #    --result_path results/hci-models/v3/hci_clf_train_resnext_rgb_112_allbutnone_crop \
@@ -57,12 +57,12 @@ nohup python main.py \
 #    --iscrop \
 #    --no_val \
 #    --pretrain_path report/models/jester_resnext_101_RGB_32.pth \
-#    --pretrain_dataset jester > out/hci_clf_train_resnext_rgb_112_allbutnone_crop_datav3_32.out 2>&1 &
+#    --pretrain_dataset jester > hci_clf_train_resnext_rgb_112_allbutnone_crop_datav3_32.out 2>&1 &
 
 
 # export CUDA_VISIBLE_DEVICES=1,3
 # nohup python main.py \
-#     --root_path /data2/project/gesture/resnext-mmtm/ \
+#     --root_path /data2/project/LD-ConGR-CVPR2022/resnext-mmtm/ \
 #     --video_path /data/datasets/HCIGesture \
 #     --annotation_path annotation_hciGesture/dataV3/hciall_but_None.json \
 #     --result_path results/hci-models/v3/hci_clf_train_mmtnet_rgbd_112_allbutnone_32 \
@@ -86,12 +86,12 @@ nohup python main.py \
 #     --save_all \
 #     --no_val \
 #     --pretrain_path report/models/jester_resnext_101_RGB_32.pth \
-#     --pretrain_dataset jester > out/hci_clf_train_resnext_rgbd_112_allbutnone_datav3_32.out 2>&1 &
+#     --pretrain_dataset jester > hci_clf_train_resnext_rgbd_112_allbutnone_datav3_32.out 2>&1 &
 
 
 # export CUDA_VISIBLE_DEVICES=4,3
 # nohup python main.py \
-#    --root_path /data2/project/gesture/resnext-mmtm/ \
+#    --root_path /data2/project/LD-ConGR-CVPR2022/resnext-mmtm/ \
 #    --video_path /data/datasets/HCIGesture \
 #    --annotation_path annotation_hciGesture/dataV3/hciall_but_None_keyframes.json \
 #    --result_path results/hci-models/v3/hci_clf_train_resnext_rgb_112_allbutnone_32keyframes_crop_pretrain_2 \
@@ -119,11 +119,11 @@ nohup python main.py \
 #    --iscrop \
 #    --no_val \
 #    --pretrain_path results/hci-models/v3/hci_clf_train_resnext_rgb_112_allbutnone_crop_resize/hcigesture_resnext_1.0x_RGB_32_epoch_028.pth \
-#    --pretrain_dataset hcigesture > out/hci_clf_train_resnext_rgb_112_allbutnone_datav3_32keyframes_crop_pretrain_2.out 2>&1 &
+#    --pretrain_dataset hcigesture > hci_clf_train_resnext_rgb_112_allbutnone_datav3_32keyframes_crop_pretrain_2.out 2>&1 &
 
 # export CUDA_VISIBLE_DEVICES=1,2
 # nohup python main.py \
-#    --root_path /data2/project/gesture/resnext-mmtm/ \
+#    --root_path /data2/project/LD-ConGR-CVPR2022/resnext-mmtm/ \
 #    --video_path /data/datasets/HCIGesture \
 #    --annotation_path annotation_hciGesture/dataV3/hciall_but_None_keyframes.json \
 #    --result_path results/hci-models/v3/hci_clf_train_mmtnet_rgbd_112_allbutnone_32keyframes_crop_pretrain \
@@ -151,11 +151,11 @@ nohup python main.py \
 #    --iscrop \
 #    --no_val \
 #    --pretrain_path results/hci-models/v3/hci_clf_train_mmtnet_rgbd_112_allbutnone_crop/hcigesture_mmtnet_1.0x_RGB-D_32_epoch_024.pth \
-#    --pretrain_dataset hcigesture > out/hci_clf_train_mmtnet_rgbd_112_allbutnone_datav3_32keyframes_crop_pretrain.out 2>&1 &
+#    --pretrain_dataset hcigesture > hci_clf_train_mmtnet_rgbd_112_allbutnone_datav3_32keyframes_crop_pretrain.out 2>&1 &
 
 # export CUDA_VISIBLE_DEVICES=4,3
 # nohup python main.py \
-#    --root_path /data2/project/gesture/resnext-mmtm/ \
+#    --root_path /data2/project/LD-ConGR-CVPR2022/resnext-mmtm/ \
 #    --video_path /data/datasets/HCIGesture \
 #    --annotation_path annotation_hciGesture/dataV3/hciall_but_None_keyframes.json \
 #    --result_path results/hci-models/v3/hci_clf_train_mmtnet_rgbd_112_allbutnone_16keyframes_crop_pretrain \
@@ -183,7 +183,7 @@ nohup python main.py \
 #    --iscrop \
 #    --no_val \
 #    --pretrain_path results/hci-models/v3/hci_clf_train_mmtnet_rgbd_112_allbutnone_16_crop/hcigesture_mmtnet_1.0x_RGB-D_16_epoch_023.pth \
-#    --pretrain_dataset hcigesture > out/hci_clf_train_mmtnet_rgbd_112_allbutnone_datav3_16keyframes_crop_pretrain.out 2>&1 &
+#    --pretrain_dataset hcigesture > hci_clf_train_mmtnet_rgbd_112_allbutnone_datav3_16keyframes_crop_pretrain.out 2>&1 &
 
 
 

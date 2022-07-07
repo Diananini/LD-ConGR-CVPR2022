@@ -1,4 +1,3 @@
-import argparse
 import time
 import os
 import glob
@@ -23,7 +22,6 @@ from target_transforms import Compose as TargetCompose
 from dataset import get_training_set, get_validation_set, get_test_set, get_online_data
 # import test
 from utils import *
-import pdb
 
 def plot_cm(cm, classes, normalize = True):
     import seaborn as sns
@@ -41,7 +39,7 @@ def plot_cm(cm, classes, normalize = True):
     ax.set_ylabel('True labels')
     plt.xticks(rotation='vertical')
     plt.yticks(rotation='horizontal')
-    
+   
 def plot_accuracy(accs_dic):
     epochs = list(accs_dic.keys())
     accs = np.array([accs_dic[epoch] for epoch in sorted(epochs)])
@@ -78,14 +76,7 @@ def test_one(model, test_loader):
             inputs = Variable(inputs)
             targets = Variable(targets)
 
-            # print('input size', inputs.size())
-            # update !!!
-            # inputs = torch.Tensor(inputs.numpy()[:,:,::2,:,:])
-
             outputs_l = model(inputs)
-            # if not opt.no_softmax_in_test:
-            #     outputs = F.softmax(outputs)
-            # recorder.append(outputs.data.cpu().numpy().copy())
         
         if type(outputs_l) == tuple:
             outputs_l = list(outputs_l)
@@ -160,10 +151,6 @@ def test_one_split(model, test_loader):
             inputs = Variable(inputs)
             targets = Variable(targets)
 
-            # print('input size', inputs.size())
-            # update !!!
-            # inputs = torch.Tensor(inputs.numpy()[:,:,::2,:,:])
-
             outputs_l = model(inputs)
         
         if type(outputs_l) == tuple:
@@ -176,39 +163,8 @@ def test_one_split(model, test_loader):
             if info not in recorder:
                 recorder[info] = []
             recorder[info].append(outputs[t].tolist())
-        # print(recorder)
-        # while len(accuracies_l)<len(outputs_l):
-        #     accuracies_l.append(AverageMeter())
-        #     precisions_l.append(AverageMeter())
-        #     recalls_l.append(AverageMeter())
-        #     confusions_l.append(ConfusionMeter(opt.n_classes))
-
-        # for c, outputs in enumerate(outputs_l):
-        #     acc = calculate_accuracy(outputs.data, targets.data)[0]
-        #     precision = calculate_precision(outputs, targets)
-        #     recall = calculate_recall(outputs,targets)
-        #     confusion_m = calculate_confusion_matrix(outputs, targets, labels=range(opt.n_classes))
-
-        #     accuracies_l[c].update(acc, inputs.size(0))
-        #     precisions_l[c].update(precision, inputs.size(0))
-        #     recalls_l[c].update(recall,inputs.size(0))
-        #     confusions_l[c].update(confusion_m)
-
-        #     c += 1
-
-    #     batch_time.update(time.time() - end_time)
-    #     end_time = time.time()
-
-
-    # acc_l = [accuracies.avg for accuracies in accuracies_l]
-    # pre_l = [precisions.avg for precisions in precisions_l]
-    # recall_l = [recalls.avg for recalls in recalls_l]
-    # cm_l = [confusions.conf.tolist() for confusions in confusions_l]
-    
 
     return recorder#acc_l, pre_l, recall_l, cm_l
-
-# time.sleep(60*60*9) # seconds   1.5h
 
 opt = parse_opts()
 if opt.root_path != '':
@@ -229,6 +185,7 @@ opt.mean = get_mean(opt.norm_value)
 opt.std = get_std(opt.norm_value)
 
 print(opt)
+
 with open(os.path.join(opt.result_path, 'opts'+opt.log_postfix+'.json'), 'w') as opt_file:
     json.dump(vars(opt), opt_file)
 
@@ -280,10 +237,8 @@ if os.path.isfile(opt.resume_path):
 else:
     model_paths = glob.glob(os.path.join(opt.resume_path, '*epoch*.pth'))
 
-accs_dic = {}#{5: 94.221, 4: 94.467, 3: 94.419, 2: 94.476, 1: 94.618, 7: 94.117, 6: 94.202, 12: 94.523, 11: 94.334, 10: 94.268, 9: 94.41, 16: 94.448, 15: 94.419, 14: 94.533, 13: 94.183, 8: 94.192}
-#{5: 92.906, 4: 92.641, 3: 92.518, 2: 92.329, 1: 92.234, 7: 93.038, 6: 92.792, 11: 92.84, 10: 92.679, 9: 93.256, 8: 92.896, 14: 92.707, 13: 92.925, 12: 92.991}
-#{22: 91.042, 21: 91.25, 20: 91.619, 27: 91.213, 26: 90.834, 25: 90.853, 24: 91.222, 23: 91.156}#{18: 97.162, 17: 96.964, 16: 96.784, 15: 96.472, 20: 97.162, 19: 96.879, 23: 97.153, 22: 97.247, 21: 97.304}#{19: 81.215, 18: 81.716, 17: 81.546, 16: 81.385, 15: 81.479, 24: 82.189, 23: 81.233, 22: 81.924, 21: 81.044, 20: 81.971}#{25:94.457, 26:94.448, 27:94.542, 28:94.656}
-for model_path in sorted(model_paths)[::-1][:5]:
+accs_dic = {}
+for model_path in sorted(model_paths):
     print('loading checkpoint {}'.format(model_path))
     checkpoint = torch.load(model_path)
     # print('opt.arch',opt.arch)
@@ -319,9 +274,9 @@ for model_path in sorted(model_paths)[::-1][:5]:
         })
 
         accs_dic[epoch] = round(float(acc_l[-1]), 3)
-        print('y_true=', y_true)
-        print('y_pred=', y_pred)
-        print('distance=', distance)
+        # print('y_true=', y_true)
+        # print('y_pred=', y_pred)
+        # print('distance=', distance)
     
 
 print(accs_dic)
