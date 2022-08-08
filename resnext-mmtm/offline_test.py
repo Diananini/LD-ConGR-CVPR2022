@@ -157,7 +157,7 @@ def test_one_split(model, test_loader):
             outputs_l = list(outputs_l)
             outputs_l = sum(outputs_l)
         if not opt.no_softmax_in_test:
-            outputs = F.softmax(outputs_l)
+            outputs = F.softmax(outputs_l,dim=1)
         outputs = outputs.data.cpu().numpy().copy()
         for t, info in enumerate(infos):
             if info not in recorder:
