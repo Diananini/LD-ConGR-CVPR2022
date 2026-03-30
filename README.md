@@ -17,7 +17,7 @@ LD-ConGR dataset contains 10 gesture classes, of which three are static gestures
 <p align="center"><font size=2>Fig. 3 Number of gesture instances and statistics of gesture duration</font></p>
 
 ### Data Download
-The data is only allowed for academic research. You can access LD-ConGR dataset only after signing the [Agreement](Agreement.pdf) and sending it to diananiniliu@gmail.com. We will email you the dataset download link. The total download size is about 42 GB.
+The data is only allowed for academic research. You can access LD-ConGR dataset only after signing the [Agreement](Agreement.pdf) and sending it to diananiniliu@gmail.com (Please name the file in the format 'YYYYMMDD_FirstNameSignee_FamilyNameSignee_Institution'). We will email you the dataset download link. The total download size is about 42 GB.
 
 ### Evaluation Metric
 According to whether the temporal boundary of the gesture is pointed out, gesture recognition can be divided into isolated gesture recognition (IsoGR) and continuous gesture recognition (ConGR). IsoGR refers to the classification of a given sequence that contains a single gesture. ConGR refers to detecting the beginning and end of each gesture instance and identifying its category for a given video sequence, which may contain more than one gesture.
